@@ -1,34 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <!-- Meta, title, CSS, favicons, etc. -->
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <title>DataTables | Gentelella</title>
-
-    <!-- Bootstrap -->
-    <link href="cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
-    <link href="../../../Admin1/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Font Awesome -->
-    <link href="../../../Admin1/vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
-    <!-- NProgress -->
-    <link href="../../../Admin1/vendors/nprogress/nprogress.css" rel="stylesheet">
-    <!-- iCheck -->
-    <link href="../../../Admin1/vendors/iCheck/skins/flat/green.css" rel="stylesheet">
-    <!-- Datatables -->
-    
-    <link href="../../../Admin1/vendors/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
-    <link href="../../../Admin1/vendors/datatables.net-buttons-bs/css/buttons.bootstrap.min.css" rel="stylesheet">
-    <link href="../../../Admin1/vendors/datatables.net-fixedheader-bs/css/fixedHeader.bootstrap.min.css" rel="stylesheet">
-    <link href="../../../Admin1/vendors/datatables.net-responsive-bs/css/responsive.bootstrap.min.css" rel="stylesheet">
-    <link href="../../../Admin1/vendors/datatables.net-scroller-bs/css/scroller.bootstrap.min.css" rel="stylesheet">
-
-    <!-- Custom Theme Style -->
-    <link href="../../../Admin1/build/css/custom.min.css" rel="stylesheet">
-  </head>
+    	<?php require_once('../../component/head_list.php')?>
 
   <body class="nav-md">
     <div class="container body">
@@ -38,57 +10,16 @@
             <div class="navbar nav_title" style="border: 0;">
               <a href="index.html" class="site_title"><i class="fa fa-paw"></i> <span>Gestion épidemie</span></a>
             </div>
-
             <div class="clearfix"></div>
 
             <!-- menu profile quick info -->
-            <div class="profile clearfix">
-              <div class="profile_pic">
-                <img src="../../../Admin1/production/images/img.jpg" alt="..." class="img-circle profile_img">
-              </div>
-              <div class="profile_info">
-                <span>Bienvenue</span>
-                <h2>Mouaze Sow</h2>
-              </div>
-            </div>
+            <?php require_once('../../component/menu_profile.php')?>
             <!-- /menu profile quick info -->
 
             <br />
 
            <!-- sidebar menu -->
-					<div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
-						<div class="menu_section">
-							<h3>General</h3>
-							<ul class="nav side-menu">
-							    <li><a href="../index.php"><i class="fa fa-home"></i>Accueil <span class="fa fa-chevron-down"></span></a>
-								</li>
-							</ul>
-							<ul class="nav side-menu">
-								<li><a><i class="fa fa-home"></i>Pays <span class="fa fa-chevron-down"></span></a>
-								<ul class="nav child_menu">
-									<li><a href="add_pays.php">Ajouter</a></li>
-									<li><a href="list_pays.php">Lister</a></li>
-								</ul>
-								</li>
-							</ul>
-							<ul class="nav side-menu">
-								<li><a><i class="fa fa-home"></i>Zone <span class="fa fa-chevron-down"></span></a>
-								<ul class="nav child_menu">
-									<li><a href="add_zone.php">Ajouter</a></li>
-									<li><a href="list_zone.php">Lister</a></li>
-								</ul>
-								</li>
-							</ul>
-							<ul class="nav side-menu">
-								<li><a><i class="fa fa-home"></i>Point de surveillance <span class="fa fa-chevron-down"></span></a>
-								<ul class="nav child_menu">
-									<li><a href="add_pointsurveillance.php">Ajouter</a></li>
-									<li><a href="list_pointsurveillance.php">Lister</a></li>
-								</ul>
-								</li>
-							</ul>
-						</div>
-					</div>
+            <?php require_once('../../component/sidebar.php')?>
 					<!-- /sidebar menu -->
 
             <!-- /menu footer buttons -->
@@ -205,115 +136,93 @@
 
         <!-- page content -->
         <div class="right_col" role="main">
-          <div class="">
-            <div class="page-title">
-              <div class="title_left">
-                <h3>Liste des Points de surveillance</h3>
-              </div>
-
-              <div class="title_right">
-                <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
-                  <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Search for...">
-                    <span class="input-group-btn">
-                      <button class="btn btn-secondary" type="button">Go!</button>
-                    </span>
-                  </div>
-                </div>
-              </div>
+        <div class="">
+          <div class="page-title">
+            <div class="title_left">
+              <h3>Liste des Points de Surveillance</h3>
             </div>
-
-            <div class="clearfix"></div>
-
-            <div class="row">
-              <div class="col-md-12 col-sm-12 ">
-                <div class="x_panel">
-                  <div class="x_title">
-                    <h2>Liste</h2>
-                    <ul class="nav navbar-right panel_toolbox">
-                      <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                      </li>
-                      <li><a class="close-link"><i class="fa fa-close"></i></a>
-                      </li>
-                    </ul>
-                    <div class="clearfix"></div>
-                  </div>
-                  <div class="x_content">
-                      <div class="row">
-                          <div class="col-sm-12">
-                            <div class="card-box table-responsive">
-                    <table id="datatable-buttons" class="table table-striped table-bordered" style="width:100%">
-                      <thead>
-                        <tr>
-                          <th><strong>Nom des Point de surveillance</strong></th>
-                          <th><strong>Les Zones</strong></th>
-                          <th><strong>Action</strong></th>
-                        </tr>
-                      </thead>
-
-                      <tbody>
-                        <tr>
-                          
-                        </tr>
-                        <tr>
-                          
-                        </tr>
-                        <tr>
-                          
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
+          </div>
+          <div class="clearfix"></div>
+          <div class="row">
+            <div class="col-md-12 col-sm-12 ">
+              <div class="x_panel">
+                <div class="x_title">
+                  <h2>Liste</h2>
+                  <ul class="nav navbar-right panel_toolbox">
+                    <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                    </li>
+                    <li><a class="close-link"><i class="fa fa-close"></i></a>
+                    </li>
+                  </ul>
+                  <div class="clearfix"></div>
                 </div>
-              </div>
-            </div>
+                <div class="x_content">
+                  <?php
+                  if (isset($_GET['success'])) {
+                    echo '<div class="alert alert-success alert-dismissible fade show" role="alert">';
+                    echo 'La zone a été supprimée avec succès.';
+                    echo '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>';
+                    echo '</div>';
+                  }
+                  if (isset($_GET['error'])) {
+                    echo '<div class="alert alert-danger alert-dismissible fade show" role="alert">';
+                    switch ($_GET['error']) {
+                      case 'notfound':
+                        echo 'La zone demandée n\'existe pas.';
+                        break;
+                      case 'delete':
+                        echo 'Une erreur est survenue lors de la suppression de la zone.';
+                        break;
+                      case 'noid':
+                        echo 'Aucun identifiant de zone n\'a été fourni.';
+                        break;
+                    }
+                    echo '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>';
+                    echo '</div>';
+                  }
+                  ?>
+                  <div class="row">
+                    <div class="col-sm-12">
+                      <div class="card-box table-responsive">
+                        <table id="datatable-buttons" class="table table-striped table-bordered" style="width:100%">
+                          <thead>
+                            <tr>
+                              <th><strong>Nom du Point de Surveillance</strong></th>
+                              <th><strong>Zone</strong></th>
+                              <th><strong>Action</strong></th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <?php foreach ($pointSurveillanceList as $pointSurveillance): ?>
+                              <tr>
+                                <td><?= htmlspecialchars($pointSurveillance->getNom_pointsuper()); ?></td>
+                                <td><?= htmlspecialchars($pointSurveillance->getZone()); ?></td>
+                                <td>
+                                  <a href="update_pointsurveillance.php?id=<?= $pointSurveillance->getId(); ?>"
+                                    class="btn btn-warning btn-sm">Modifier</a>
+                                  <a href="delete_pointsurveillance.php?id=<?= $pointSurveillance->getId(); ?>" class="btn btn-danger btn-sm"
+                                    onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette zone ?');">Supprimer</a>
+                                </td>
+                              </tr>
+                            <?php endforeach; ?>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
+      </div>
         <!-- /page content -->
 
         <!-- footer content -->
-        <footer>
-          <div class="pull-right">
-            Gentelella - Bootstrap Admin Template by <a href="https://colorlib.com">Colorlib</a>
-          </div>
-          <div class="clearfix"></div>
-        </footer>
+        <?php require_once('../../component/footer.php') ?>
         <!-- /footer content -->
       </div>
     </div>
-
-    <!-- jQuery -->
-    <script src="../../../Admin1/vendors/jquery/dist/jquery.min.js"></script>
-    <!-- Bootstrap -->
-   <script src="../../../Admin1/vendors/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- FastClick -->
-    <script src="../../../Admin1/vendors/fastclick/lib/fastclick.js"></script>
-    <!-- NProgress -->
-    <script src="../../../Admin1/vendors/nprogress/nprogress.js"></script>
-    <!-- iCheck -->
-    <script src="../../../Admin1/vendors/iCheck/icheck.min.js"></script>
-    <!-- Datatables -->
-    <script src="../../../Admin1/vendors/datatables.net/js/jquery.dataTables.min.js"></script>
-    <script src="../../../Admin1/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
-    <script src="../../../Admin1/vendors/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
-    <script src="../../../Admin1/vendors/datatables.net-buttons-bs/js/buttons.bootstrap.min.js"></script>
-    <script src="../../../Admin1/vendors/datatables.net-buttons/js/buttons.flash.min.js"></script>
-    <script src="../../../Admin1/vendors/datatables.net-buttons/js/buttons.html5.min.js"></script>
-    <script src="../../../Admin1/vendors/datatables.net-buttons/js/buttons.print.min.js"></script>
-    <script src="../../../Admin1/vendors/datatables.net-fixedheader/js/dataTables.fixedHeader.min.js"></script>
-    <script src="../../../Admin1/vendors/datatables.net-keytable/js/dataTables.keyTable.min.js"></script>
-    <script src="../../../Admin1/vendors/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
-    <script src="../../../Admin1/vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js"></script>
-    <script src="../../../Admin1/vendors/datatables.net-scroller/js/dataTables.scroller.min.js"></script>
-    <script src="../../../Admin1/vendors/jszip/dist/jszip.min.js"></script>
-    <script src="../../../Admin1/vendors/pdfmake/build/pdfmake.min.js"></script>
-    <script src="../../../Admin1/vendors/pdfmake/build/vfs_fonts.js"></script>
-
-    <!-- Custom Theme Scripts -->
-    <script src="../../../Admin1/build/js/custom.min.js"></script>
-
+    	<?php require_once('../../component/script_list.php')?>
   </body>
 </html>
