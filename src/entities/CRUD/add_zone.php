@@ -19,18 +19,28 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         if (!$pays) {
             echo "<div class='alert alert-danger'>Pays introuvable.</div>";
         } else {
-            $zone = new Zone();
-            $zone->setNom($nom);
-            $zone->setStatut($statut);
-            $zone->setNb_habitants($nbHabitants);
-            $zone->setNb_symptomatiques($nbSymptomatiques);
-            $zone->setNb_positifs($nbPositifs);
-            $zone->setPays($pays);
+            // Vérifier si une zone avec ce nom et ce pays existe déjà
+            $existingZone = $entityManager->getRepository(Zone::class)
+                ->findOneBy(['nom' => $nom, 'pays' => $pays]);
 
-            $entityManager->persist($zone);
-            $entityManager->flush();
+            if ($existingZone) {
+                echo "<div class='alert alert-danger'>Cette zone existe déjà dans la base de données avec le même pays.</div>";
+            } else {
+                $zone = new Zone();
+                $zone->setNom($nom);
+                $zone->setStatut($statut);
+                $zone->setNb_habitants($nbHabitants);
+                $zone->setNb_symptomatiques($nbSymptomatiques);
+                $zone->setNb_positifs($nbPositifs);
+                $zone->setPays($pays);
 
-            echo "<div class='alert alert-success'>Zone ajoutée avec succès !</div>";
+                $entityManager->persist($zone);
+                $entityManager->flush();
+
+                // Rediriger vers la page de liste des zones
+                header("Location: list_zone.php?success=ajouter");
+                exit();
+            }
         }
     }
 }
@@ -38,28 +48,28 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
 <!DOCTYPE html>
 <html lang="en">
-	<?php require_once('../../component/head.php')?>
-	
-	<body class="nav-md">
-		<div class="container body">
+<?php require_once('../../component/head.php') ?>
+
+<body class="nav-md">
+	<div class="container body">
 		<div class="main_container">
 			<div class="col-md-3 left_col">
 				<div class="left_col scroll-view">
 					<div class="navbar nav_title" style="border: 0;">
-						<a href="index.html" class="site_title"><i class="fa fa-paw"></i> <span>Gestion épidemie</span></a>
+						<a href="index.html" class="site_title"><i class="fa fa-globe"></i> <span>Gestion épidemie</span></a>
 					</div>
 
 					<div class="clearfix"></div>
 
 					<!-- menu profile quick info -->
-					 <!-- Recherche require_once et require -->
-					<?php require_once('../../component/menu_profile.php')?>
+					<!-- Recherche require_once et require -->
+					<?php require_once('../../component/menu_profile.php') ?>
 					<!-- /menu profile quick info -->
 
 					<br />
 
 					<!-- sidebar menu -->
-						<?php require_once('../../component/sidebar.php')?>
+					<?php require_once('../../component/sidebar.php') ?>
 					<!-- /sidebar menu -->
 
 					<!-- /menu footer buttons -->
@@ -82,13 +92,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 			</div>
 
 			<!-- top navigation -->
-			<div class="top_nav">
-				<div class="nav_menu">
-					<div class="nav toggle">
-						<a id="menu_toggle"><i class="fa fa-bars"></i></a>
-					</div>
-				</div>
-			</div>
+			<?php require_once('../../component/top_navig.php') ?>
 			<!-- /top navigation -->
 
 			<!-- page content -->
@@ -169,7 +173,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 			<!-- /page content -->
 
 			<!-- footer content -->
-				<?php require_once('../../component/footer.php') ?>
+			<?php require_once('../../component/footer.php') ?>
 			<!-- /footer content -->
 		</div>
 	</div>
@@ -177,4 +181,5 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 	<?php require_once('../../component/script.php') ?>
 
 </body>
+
 </html>

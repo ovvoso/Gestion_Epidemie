@@ -1,6 +1,7 @@
 <?php
 
 namespace App;
+
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -19,10 +20,10 @@ class Pays
 
     #[ORM\OneToMany(targetEntity: Zone::class, cascade: ['persist', 'remove'], mappedBy: 'pays')]
     private Collection $zones;
-    
+
     public function __construct()
     {
-        $this->zones = new ArrayCollection(); 
+        $this->zones = new ArrayCollection();
     }
 
     public function getId()

@@ -34,4 +34,3 @@ if ($zoneId) {
     header('Location: list_zone.php?error=noid');
     exit;
 }
-?>

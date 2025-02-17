@@ -5,32 +5,42 @@ use App\Zone;
 use App\PointSurveillance;
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
-	$nom = trim($_POST['nom']);
-	$zoneId = $_POST['zone'] ?? null;
+    $nom = trim($_POST['nom']);
+    $zoneId = $_POST['zone'] ?? null;
 
-	if (empty($nom) || !$zoneId) {
-		echo "<div class='alert alert-danger'>Tous les champs doivent être remplis.</div>";
-	} else {
-		$zone = $entityManager->find(Zone::class, $zoneId);
-		if (!$zone) {
-			echo "<div class='alert alert-danger'>Zone introuvable.</div>";
-		} else {
-			$pointSurveillance = new PointSurveillance();
-			$pointSurveillance->setNom_pointsuper($nom);
-			$pointSurveillance->setZone($zone);
+    if (empty($nom) || !$zoneId) {
+        echo "<div class='alert alert-danger'>Tous les champs doivent être remplis.</div>";
+    } else {
+        $zone = $entityManager->find(Zone::class, $zoneId);
+        if (!$zone) {
+            echo "<div class='alert alert-danger'>Zone introuvable.</div>";
+        } else {
+            // Vérifier si un point de surveillance avec ce nom et cette zone existe déjà
+            $existingPointSurveillance = $entityManager->getRepository(PointSurveillance::class)
+                ->findOneBy(['nom_pointsuper' => $nom, 'zone' => $zone]);
 
-			$entityManager->persist($pointSurveillance);
-			$entityManager->flush();
+            if ($existingPointSurveillance) {
+                echo "<div class='alert alert-danger'>Ce point de surveillance existe déjà dans la base de données avec la même zone.</div>";
+            } else {
+                $pointSurveillance = new PointSurveillance();
+                $pointSurveillance->setNom_pointsuper($nom);
+                $pointSurveillance->setZone($zone);
 
-			echo "<div class='alert alert-success'>Point de surveillance ajouté avec succès !</div>";
-		}
-	}
+                $entityManager->persist($pointSurveillance);
+                $entityManager->flush();
+
+                // Rediriger vers la page de liste des points de surveillance
+                header("Location: list_pointsurveillance.php?success=ajouter");
+                exit();
+            }
+        }
+    }
 }
 ?>
 <!DOCTYPE html>
 <html lang="en">
 
-	<?php require_once('../../component/head.php')?>
+<?php require_once('../../component/head.php') ?>
 
 <body class="nav-md">
 	<div class="container body">
@@ -38,17 +48,17 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 			<div class="col-md-3 left_col">
 				<div class="left_col scroll-view">
 					<div class="navbar nav_title" style="border: 0;">
-						<a href="index.html" class="site_title"><i class="fa fa-paw"></i> <span>Gentelella Alela!</span></a>
+						<a href="index.html" class="site_title"><i class="fa fa-globe"></i> <span>Gentelella Alela!</span></a>
 					</div>
 					<div class="clearfix"></div>
 					<!-- menu profile quick info -->
-					<?php require_once('../../component/menu_profile.php')?>
+					<?php require_once('../../component/menu_profile.php') ?>
 					<!-- /menu profile quick info -->
 
 					<br />
 
 					<!-- sidebar menu -->
-					<?php require_once('../../component/sidebar.php')?>
+					<?php require_once('../../component/sidebar.php') ?>
 					<!-- /sidebar menu -->
 
 					<!-- /menu footer buttons -->
@@ -71,13 +81,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 			</div>
 
 			<!-- top navigation -->
-			<div class="top_nav">
-				<div class="nav_menu">
-					<div class="nav toggle">
-						<a id="menu_toggle"><i class="fa fa-bars"></i></a>
-					</div>
-				</div>
-			</div>
+			<?php require_once('../../component/top_navig.php') ?>
 			<!-- /top navigation -->
 
 			<!-- page content -->
@@ -116,18 +120,18 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 												class="form-control">
 										</div>
 										<div class="mb-3">
-										<label for="zone" class="form-label">Zone<span class="required">*</span></label>
-										<select id="zone" name="zone" class="form-control" required>
-											<option value="">Choisir une Zone</option>
-											<?php
-											// Ajout dynamique des pays depuis la base de données
-											$zoneList = $entityManager->getRepository(App\Zone::class)->findAll();
-											foreach ($zoneList as $zone) {
-												echo "<option value='{$zone->getId()}'>{$zone->getNom()}</option>";
-											}
-											?>
-										</select>
- 
+											<label for="zone" class="form-label">Zone<span class="required">*</span></label>
+											<select id="zone" name="zone" class="form-control" required>
+												<option value="">Choisir une Zone</option>
+												<?php
+												// Ajout dynamique des pays depuis la base de données
+												$zoneList = $entityManager->getRepository(App\Zone::class)->findAll();
+												foreach ($zoneList as $zone) {
+													echo "<option value='{$zone->getId()}'>{$zone->getNom()}</option>";
+												}
+												?>
+											</select>
+
 										</div>
 										<!-- <div class="ln_solid"></div> -->
 										<div class="text-center mb-3">
@@ -144,12 +148,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 			<!-- /page content -->
 
 			<!-- footer content -->
-			<?php require_once('../../component/footer.php')?>
+			<?php require_once('../../component/footer.php') ?>
 			<!-- /footer content -->
 		</div>
 	</div>
 
-	<?php require_once('../../component/script.php')?>
+	<?php require_once('../../component/script.php') ?>
 
 </body>
+
 </html>

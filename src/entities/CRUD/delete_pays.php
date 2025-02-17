@@ -34,4 +34,3 @@ if ($paysId) {
     header('Location: list_pays.php?error=noid');
     exit;
 }
-?>
