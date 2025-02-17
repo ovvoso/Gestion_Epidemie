@@ -91,8 +91,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 						<div class="title_left">
 							<h3>Formulaire du Pays</h3>
 						</div>
-
-						
 					</div>
 					<div class="clearfix"></div>
 					<div class="container mt-5">
