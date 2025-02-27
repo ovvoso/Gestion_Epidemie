@@ -84,8 +84,8 @@ Les contributions sont les bienvenues ! Voici comment vous pouvez contribuer :
 <img src="Admin1/imagesCaptu/ListZone.png"/>
 
 ### Gestion des Points de Surveillance
-<img src="Admin1/imagesCaptu/AjoutPointSurveillance.png"/>
-<img src="Admin1/imagesCaptu/ListPointSurveillance.png"/>
+<img src="Admin1/imagesCaptu/AjoutPointSuveillance.png"/>
+<img src="Admin1/imagesCaptu/ListPointSurveillance .png"/>
 
 ## 🔄 Dernières mises à jour
 
